@@ -1,16 +1,58 @@
-<!DOCTYPE html>  
+ <!DOCTYPE html>  
 <html lang="vi">  
-<head>  
-    <meta charset="UTF-8">  
-    <title>Kiểm tra đúng sai</title> 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-</head>  
-<body>  
-<!DOCTYPE html>  
-<html lang="vi">  
-<head>  
+<head>
+    <script type=”text/JavaScript”>
+      function killCopy(e){ 
+          return false } 
+      function reEnable(){ 
+          return true } 
+      document.onselectstart = new Function (“return false”) 
+      
+      if (window.sidebar){  
+          document.onmousedown=killCopy 
+          document.onclick=reEnable 
+      }
+  </script>
+	<script language="JavaScript">
+    window.onload = function() {
+        document.addEventListener("contextmenu", function(e) {
+            e.preventDefault();
+        }, false);
+        document.addEventListener("keydown", function(e) {
+            //document.onkeydown = function(e) {
+            // "I" key
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 73) {
+                disabledEvent(e);
+            }
+            // "J" key
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 74) {
+                disabledEvent(e);
+            }
+            // "S" key + macOS
+            if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
+                disabledEvent(e);
+            }
+            // "U" key
+            if (e.ctrlKey && e.keyCode == 85) {
+                disabledEvent(e);
+            }
+            // "F12" key
+            if (event.keyCode == 123) {
+                disabledEvent(e);
+            }
+        }, false);
+
+        function disabledEvent(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            } else if (window.event) {
+                window.event.cancelBubble = true;
+            }
+            e.preventDefault();
+            return false;
+        }
+    };
+</script>
     <meta charset="UTF-8">  
     <title>Kiểm tra đúng sai</title> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -22,25 +64,56 @@
         <div>  
             <label>Câu hỏi 1: How many verbs to be are there in total?</label>
             <br>  
-            <input type="radio" name="q1" value="answer1"> 9
-            <br> 
-            <input type="radio" name="q1" value="answer2"> 3
+            <div class="form-check">
+  <input class="form-check-input" type="radio" name="answer1" id="flexRadioDefault1">
+  <label class="form-check-label" for="flexRadioDefault1">
+    A.9
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="answer2" id="flexRadioDefault2">
+  <label class="form-check-label" for="flexRadioDefault2">
+    B.5
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="answer3" id="flexRadioDefault1">
+  <label class="form-check-label" for="flexRadioDefault1">
+    C.3
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="answer4" id="flexRadioDefault2">
+  <label class="form-check-label" for="flexRadioDefault2">
+    D.0
+  </label>
+</div>
         </div>
         <br>  
         <div>  
-            <label>Câu hỏi 2: 북한에서 분리되기 전 남한의 옛 이름은 무엇이었나요?</label>
+            <label>Câu hỏi 2: Translate the following sentence:
+                         Tôi đến từ Việt Nam.</label>
             <br>  
-            <input type="radio" name="q2" value="answer1"> 선택됨
+            <input type="radio" name="q2" value="answer1"> A. I'm from Viet Nam
             <br> 
-            <input type="radio" name="q2" value="answer2"> 한국  
+            <input type="radio" name="q2" value="answer2"> B I from England
+            <br>  
+            <input type="radio" name="q2" value="answer3"> C You're from Vietnam
+            <br> 
+            <input type="radio" name="q2" value="answer4"> D No answer
         </div>
         <br>  
         <div>  
-            <label>Câu hỏi 3: 한국은 몇km²인가요?</label>
+            <label>Câu hỏi 3: Shorten the following phrase:
+                            You are</label>
             <br>  
             <input type="radio" name="q3" value="answer1"> 100,210km²
             <br>
-            <input type="radio" name="q3" value="answer2"> 474,590km²  
+            <input type="radio" name="q3" value="answer2"> 474,590km²
+            <br>  
+            <input type="radio" name="q3" value="answer3"> 
+            <br> 
+            <input type="radio" name="q3" value="answer4"> 
         </div>
         <br>  
         <div>  
@@ -48,7 +121,11 @@
             <br>  
             <input type="radio" name="q4" value="answer1"> 검은색
             <br>  
-            <input type="radio" name="q4" value="answer2"> 하얀색 
+            <input type="radio" name="q4" value="answer2"> 하얀색
+            <br>  
+            <input type="radio" name="q4" value="answer3"> 
+            <br> 
+            <input type="radio" name="q4" value="answer4"> 
         </div>
         <br>
         <div>  
@@ -57,6 +134,10 @@
             <input type="radio" name="q5" value="answer1"> 아프리카
             <br>  
             <input type="radio" name="q5" value="answer2"> 아시아
+            <br>  
+            <input type="radio" name="q5" value="answer3"> 
+            <br> 
+            <input type="radio" name="q5" value="answer4">
         </div>
         <br>  
         <div>  
@@ -140,8 +221,8 @@
             var q9 = document.querySelector('input[name="q9"]:checked');  
             var q10 = document.querySelector('input[name="q10"]:checked');  
 
-            if (q1 && q1.value === "") score++;  
-            if (q2 && q2.value === "") score++; 
+            if (q1 && q1.value === "answer3") score++;  
+            if (q2 && q2.value === "answer1") score++; 
             if (q3 && q3.value === "") score++; 
             if (q4 && q4.value === "") score++;
             if (q5 && q5.value === "") score++; 
@@ -159,7 +240,5 @@
             inputs.forEach(input => input.disabled = true);  
         }  
     </script>  
-</body>  
-</html>
 </body>  
 </html>
