@@ -54,19 +54,25 @@
     };
 </script>
 	<script>
-      // Danh sách các User-Agent của thiết bị mà bạn muốn chặn
+     // Danh sách các User-Agent mà bạn muốn chặn
 const blockedUserAgents = [
-    "Android 9", // Thay DeviceName1 bằng User-Agent cụ thể
-    "iOS 9"  // Thay DeviceName2 bằng User-Agent cụ thể
+    "Windows NT 11.0",  // Chặn Windows 10
+    "Macintosh",         // Chặn macOS
+    "X11",               // Chặn Linux
+    "Chrome/128",         // Chặn Chrome phiên bản 90
+    "Firefox/88",        // Chặn Firefox phiên bản 88
+     "Android 9"
+    // Bạn có thể thêm nhiều User-Agent khác nếu cần
 ];
 
-// Kiểm tra User-Agent của trình duyệt
+// Lấy User-Agent của trình duyệt hiện tại
 const userAgent = navigator.userAgent;
 
-if (blockedUserAgents.some(ua => userAgent.includes(ua))) {
+// Kiểm tra xem User-Agent có nằm trong danh sách bị chặn không
+if (blockedUserAgents.some(agent => userAgent.includes(agent))) {
     // Chặn truy cập
-    document.body.innerHTML = "<h2>Truy cập bị chặn trên thiết bị này.</h2>";
-    console.log("Truy cập từ thiết bị này bị chặn.");
+    document.body.innerHTML = "<h2>Truy cập bị chặn trên thiết bị hoặc trình duyệt của bạn.</h2>";
+    console.log("Truy cập từ thiết bị hoặc trình duyệt bị chặn.");
 }
    </script>
     <meta charset="UTF-8">  
