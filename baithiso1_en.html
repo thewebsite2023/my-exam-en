@@ -520,11 +520,7 @@ const quiz = {
   handleSubmit: function () {
     quizSubmit.addEventListener("click", () => {
       const progressLen = listSubmit.filter((item) => item >= 0);
-      if (progressLen.length === questions.length) {
         this.handleCheckResults();
-      } else {
-        alert("Bạn chưa chọn hết đáp án");
-      }
     });
   },
   handleCheckResults: function () {
