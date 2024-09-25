@@ -20,7 +20,7 @@
           <i class="fa-regular fa-clock"></i>
           <div class="quiz_timer_text">
             <span>Time remaining</span>
-            <p id="timer">14:00:00</p>
+            <p id="timer"></p>
           </div>
         </div>
         <button id="quiz_submit">SUBMIT</button>
@@ -111,7 +111,7 @@ body {
   color: #333333a1;
 }
 .quiz_timer_text > p {
-color: var(--main-clr);
+  color: var(--main-clr);
   letter-spacing: 3px;
 }
 button {
@@ -265,7 +265,7 @@ let questions = [
   },
   {
     quiz_id: 3,
-question:
+    question:
       "When you ______ your destination, your tour guide will meet you at the airport.",
     answers: ["arrive", "reach", "get", "achieve"],
   },
@@ -374,7 +374,7 @@ const quiz = {
     questions = randomArray(questions);
     questions.forEach((q) => {
       q.answers = randomArray(q.answers);
-});
+    });
     console.log(questions);
   },
   renderQuestionList: function () {
@@ -397,7 +397,7 @@ const quiz = {
     quizProgressText.innerText = `0/${questions.length}`;
   },
   renderTimer: function () {
-    var timer = 15;
+    var timer = 1800;
     let _this = this;
     // Lấy thẻ p có id là "timer"
     var countdownElement = document.getElementById("timer");
@@ -464,9 +464,7 @@ const quiz = {
     }
   },
   handleQuestionList: function () {
-    quizQuestions.forEach((item,index)
-=>{
-	item.addEventListener("click", () => {
+    quizQuestions.forEach((item, index) => {   item.addEventListener("click", () => {
         item.scrollIntoView({
           behavior: "smooth",
           inline: "center",
@@ -567,7 +565,7 @@ const quiz = {
     this.handleAnswer();
     this.handleNext();
     this.handlePrev();
-	  this.handleKeyDown();
+    this.handleKeyDown();
     this.handleSubmit();
   },
   start: function () {
@@ -578,4 +576,4 @@ const quiz = {
 };
 quiz.start();
   </script>
-</html>
+</html>   
