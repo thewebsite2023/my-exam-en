@@ -1,266 +1,581 @@
- <!DOCTYPE html>  
-<html lang="vi">  
-<head>
-    <script type=”text/JavaScript”>
-      function killCopy(e){ 
-          return false } 
-      function reEnable(){ 
-          return true } 
-      document.onselectstart = new Function (“return false”) 
-      
-      if (window.sidebar){  
-          document.onmousedown=killCopy 
-          document.onclick=reEnable 
-      }
-  </script>
-	<script language="JavaScript">
-    window.onload = function() {
-        document.addEventListener("contextmenu", function(e) {
-            e.preventDefault();
-        }, false);
-        document.addEventListener("keydown", function(e) {
-            //document.onkeydown = function(e) {
-            // "I" key
-            if (e.ctrlKey && e.shiftKey && e.keyCode == 73) {
-                disabledEvent(e);
-            }
-            // "J" key
-            if (e.ctrlKey && e.shiftKey && e.keyCode == 74) {
-                disabledEvent(e);
-            }
-            // "S" key + macOS
-            if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
-                disabledEvent(e);
-            }
-            // "U" key
-            if (e.ctrlKey && e.keyCode == 85) {
-                disabledEvent(e);
-            }
-            // "F12" key
-            if (event.keyCode == 123) {
-                disabledEvent(e);
-            }
-        }, false);
-
-        function disabledEvent(e) {
-            if (e.stopPropagation) {
-                e.stopPropagation();
-            } else if (window.event) {
-                window.event.cancelBubble = true;
-            }
-            e.preventDefault();
-            return false;
-        }
-    };
-</script>
-	<script>
-     // Danh sách các User-Agent mà bạn muốn chặn
-const blockedUserAgents = [
-    "Windows NT 11.0",  // Chặn Windows 10
-    "Macintosh",         // Chặn macOS
-    "X11",               // Chặn Linux
-    "Chrome/128",         // Chặn Chrome phiên bản 90
-    "Firefox/88",        // Chặn Firefox phiên bản 88
-     "Android 9"
-    // Bạn có thể thêm nhiều User-Agent khác nếu cần
-];
-
-// Lấy User-Agent của trình duyệt hiện tại
-const userAgent = navigator.userAgent;
-
-// Kiểm tra xem User-Agent có nằm trong danh sách bị chặn không
-if (blockedUserAgents.some(agent => userAgent.includes(agent))) {
-    // Chặn truy cập
-    document.body.innerHTML = "<h2>Truy cập bị chặn trên thiết bị hoặc trình duyệt của bạn.</h2>";
-    console.log("Truy cập từ thiết bị hoặc trình duyệt bị chặn.");
-}
-   </script>
-    <meta charset="UTF-8">  
-    <title>Kiểm tra đúng sai</title> 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-</head>  
-<body>  
-    <h1>Bài thi số 1</h1>  
-    <form id="quizForm">  
-        <div>  
-            <label>Câu hỏi 1: How many verbs to be are there in total?</label>
-            <br>  
-            <div class="form-check">
-  <input class="form-check-input" type="radio" name="answer1" id="flexRadioDefault1">
-  <label class="form-check-label" for="flexRadioDefault1">
-    A.9
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="answer2" id="flexRadioDefault2">
-  <label class="form-check-label" for="flexRadioDefault2">
-    B.5
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="answer3" id="flexRadioDefault3">
-  <label class="form-check-label" for="flexRadioDefault3">
-    C.3
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="answer4" id="flexRadioDefault4">
-  <label class="form-check-label" for="flexRadioDefault4">
-    D.0
-  </label>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz UI</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="./main.css" />
+  </head>
+  <body>
+    <div class="quiz_wrapper">
+      <div class="quiz_header">
+        <div class="quiz_timer">
+          <i class="fa-regular fa-clock"></i>
+          <div class="quiz_timer_text">
+            <span>Time remaining</span>
+            <p id="timer">14:00:00</p>
+          </div>
         </div>
-        <br>  
-        <div>  
-            <label>Câu hỏi 2: Translate the following sentence:
-                         Tôi đến từ Việt Nam.</label>
-            <br>  
-            <input type="radio" name="q2" value="answer1"> A. I'm from Viet Nam
-            <br> 
-            <input type="radio" name="q2" value="answer2"> B I from England
-            <br>  
-            <input type="radio" name="q2" value="answer3"> C You're from Vietnam
-            <br> 
-            <input type="radio" name="q2" value="answer4"> D No answer
+        <button id="quiz_submit">SUBMIT</button>
+      </div>
+      <div class="quiz_container">
+        <div class="quiz_question">
+          <h5>Question 1 of 10</h5>
+          <p id="quiz_title">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum
+            delectus et magni harum atque, ex nostrum quaerat?
+          </p>
+          <ul>
+            <li><span>A.</span><span class="quiz_answer_item">harum</span></li>
+            <li><span>B.</span><span class="quiz_answer_item">harum</span></li>
+            <li><span>C.</span><span class="quiz_answer_item">harum</span></li>
+            <li><span>D.</span><span class="quiz_answer_item">harum</span></li>
+          </ul>
         </div>
-        <br>  
-        <div>  
-            <label>Câu hỏi 3: Shorten the following phrase:
-                            You are</label>
-            <br>  
-            <input type="radio" name="q3" value="answer1"> 100,210km²
-            <br>
-            <input type="radio" name="q3" value="answer2"> 474,590km²
-            <br>  
-            <input type="radio" name="q3" value="answer3"> 
-            <br> 
-            <input type="radio" name="q3" value="answer4"> 
-        </div>
-        <br>  
-        <div>  
-            <label>Câu hỏi 4: 태극기는 어떤 색깔의 배경을 갖고 있나요?</label>
-            <br>  
-            <input type="radio" name="q4" value="answer1"> 검은색
-            <br>  
-            <input type="radio" name="q4" value="answer2"> 하얀색
-            <br>  
-            <input type="radio" name="q4" value="answer3"> 
-            <br> 
-            <input type="radio" name="q4" value="answer4"> 
-        </div>
-        <br>
-        <div>  
-            <label>Câu hỏi 5: 한국은 어느 대륙에 위치해 있나요?</label>
-            <br>  
-            <input type="radio" name="q5" value="answer1"> 아프리카
-            <br>  
-            <input type="radio" name="q5" value="answer2"> 아시아
-            <br>  
-            <input type="radio" name="q5" value="answer3"> 
-            <br> 
-            <input type="radio" name="q5" value="answer4">
-        </div>
-        <br>  
-        <div>  
-            <label>Câu hỏi 6: 한국의 인구는 몇 명입니까?</label>
-            <br>  
-            <input type="radio" name="q6" value="answer1"> 84.749.940
-            <br>  
-            <input type="radio" name="q6" value="answer2"> 51.765.524
-        </div>
-        <br>
-        <div>  
-            <label>Câu hỏi 7: 삼성그룹은 어디에 있나요?</label>
-            <br>  
-            <input type="radio" name="q7" value="answer1"> 서울
-            <br>  
-            <input type="radio" name="q7" value="answer2"> 부산
-        </div>
-        <br>  
-        <div>  
-            <label>Câu hỏi 8: LG의 옛 이름은 무엇이었나요?</label>
-            <br>  
-            <input type="radio" name="q8" value="answer1"> 인생은 좋다
-            <br>  
-            <input type="radio" name="q8" value="answer2"> 럭키금성 
-        </div>
-        <br>
-        <div>  
-            <label>Câu hỏi 9: 한국에서 가장 유명한 건물은 무엇입니까?</label>
-            <br>  
-            <input type="radio" name="q9" value="answer1"> 롯데월드
-            <br>  
-            <input type="radio" name="q9" value="answer2"> 페트로나스 타워 
-        </div>
-        <br>
-        <div>  
-            <label>Câu hỏi 10: 한국에는 도시가 몇 개 있나요?</label>
-            <br>  
-            <input type="radio" name="q10" value="answer1"> 71개 도시
-            <br>  
-            <input type="radio" name="q10" value="answer2"> 100개 도시  
-        </div>
-        <div id="result"></div>
-        <br>
-        <button type="button" onclick="checkAnswers()" class="btn btn-outline-primary">Nộp bài</button> 
-<button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-    Quay lại trang chủ
-  </button>
-  
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="staticBackdropLabel">Xác nhận</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          Bạn có muốn thoát bài thi không?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
-          <a href="https://thewebsite2023.github.io/my-exam-kr" type="button" class="btn btn-danger">Có</a>
+        <div class="quiz_progress">
+          <svg>
+            <circle r="50"></circle>
+            <circle id="progress" r="50"></circle>
+          </svg>
+          <span id="progress_text">9/10</span>
         </div>
       </div>
+      <div class="quiz_numbers">
+        <button id="quiz_prev">Prev</button>
+        <ul></ul>
+        <button id="quiz_next">Next</button>
+      </div>
     </div>
-  </div> 
-    </form>  
-  
-    <script>  
-        function checkAnswers() {  
-            var score = 0;  
-            var totalQuestions = 10;  
+  </body>
+  <style>
+    * {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  list-style: none;
+}
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}
+body {
+  font-size: 1.6rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to bottom, #f3f7ec, #bce2e7);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  color: #333;
+  align-items: center;
+}
 
-            var q1 = document.querySelector('input[name="q1"]:checked');  
-            var q2 = document.querySelector('input[name="q2"]:checked');
-            var q3 = document.querySelector('input[name="q3"]:checked');  
-            var q4 = document.querySelector('input[name="q4"]:checked');
-            var q5 = document.querySelector('input[name="q5"]:checked');  
-            var q6 = document.querySelector('input[name="q6"]:checked');
-            var q7 = document.querySelector('input[name="q7"]:checked');  
-            var q8 = document.querySelector('input[name="q8"]:checked');
-            var q9 = document.querySelector('input[name="q9"]:checked');  
-            var q10 = document.querySelector('input[name="q10"]:checked');  
+:root {
+  --main-clr: #273d30;
+}
+.quiz_wrapper {
+  background-color: white;
+  min-height: 50rem;
+  width: 80rem;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  padding: 4rem;
+}
+.quiz_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 4rem;
+}
+.quiz_timer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.quiz_timer > i {
+  font-size: 3rem;
+}
+.quiz_timer_text {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+}
+.quiz_timer_text > span {
+  font-size: 1rem;
+  color: #333333a1;
+}
+.quiz_timer_text > p {
+color: var(--main-clr);
+  letter-spacing: 3px;
+}
+button {
+  padding: 0.8rem 2.5rem;
+  background: var(--main-clr);
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: 0.5s;
+}
+.quiz_container {
+  display: flex;
+}
+.quiz_question {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.quiz_progress {
+  width: 200px;
+  position: relative;
+  margin-top: 3rem;
+}
+.quiz_progress svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  pointer-events: none;
+}
+.quiz_progress svg circle {
+  transform: translate(50%, 50%);
+  fill: none;
+  stroke: #ddd;
+  stroke-width: 10px;
+  stroke-linecap: round;
+}
+#progress {
+  stroke: var(--main-clr);
+  stroke-dasharray: 250 9999;
+  transition: 0.5s;
+}
+#progress_text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--main-clr);
+}
+.quiz_question ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+.quiz_question ul li {
+  width: 40%;
+  padding: 1rem 2rem;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  cursor: pointer;
+}
+.quiz_question ul li.active {
+  background: var(--main-clr);
+  color: white;
+  transition: 0.5s;
+}
+.quiz_question ul li.incorrect {
+  background: red;
+  color: white;
+  transition: 0.5s;
+}
+.quiz_question ul li span:nth-child(2) {
+  margin-left: 1rem;
+}
+.quiz_question > p {
+  font-weight: bold;
+  font-size: 1.6rem;
+  height: 6rem;
+}
+.quiz_numbers {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 5rem;
+}
+.quiz_numbers > ul {
+  display: flex;
+  gap: 1.5rem;
+  width: 75%;
+  overflow-x: auto;
+  padding: 1px;
+}
+ul::-webkit-scrollbar {
+  display: none;
+}
 
-            if (q1 && q1.value === "answer3") score++;  
-            if (q2 && q2.value === "answer1") score++; 
-            if (q3 && q3.value === "") score++; 
-            if (q4 && q4.value === "") score++;
-            if (q5 && q5.value === "") score++; 
-            if (q6 && q6.value === "") score++; 
-            if (q7 && q7.value === "") score++; 
-            if (q8 && q8.value === "") score++; 
-            if (q9 && q9.value === "") score++; 
-            if (q10 && q10.value === "") score++;   
+/* Hide scrollbar for IE, Edge and Firefox */
+ul {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.quiz_numbers > ul > li {
+  width: 4rem;
+  height: 4rem;
+  flex-shrink: 0;
+  text-align: center;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  line-height: 4rem;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+.quiz_numbers > ul > li.selected {
+  background-color: var(--main-clr);
+  color: white;
+}
 
-            document.getElementById('result').innerHTML =   
-                "<h1>Bạn đã đạt " + score + "/" + totalQuestions + " điểm</h1>";
+.quiz_numbers > ul > li.active {
+  border: 2px solid var(--main-clr);
+}
+.quiz_numbers > ul > li.incorrect {
+  background-color: red;
+  color: white;
+}
+.quiz_numbers > button {
+  padding: 0.5rem 2rem;
+  background: white;
+  border: 1px solid var(--main-clr);
+  color: var(--main-clr);
+}
+  </style>
+  <script>
+    // ________FAKE_DATA_______________
+let questions = [
+  {
+    quiz_id: 1,
+    question:
+      "You can learn a lot about the local _______ by talking to local people.",
+    answers: ["territory", "area", "land", "nation"],
+  },
+  {
+    quiz_id: 2,
+    question:
+      "It's good to have someone to ________ you when you are visiting a new place.",
+    answers: ["lead", "take", "guide", "bring"],
+  },
+  {
+    quiz_id: 3,
+question:
+      "When you ______ your destination, your tour guide will meet you at the airport.",
+    answers: ["arrive", "reach", "get", "achieve"],
+  },
+  {
+    quiz_id: 4,
+    question: "It can be quite busy here during the tourist ______",
+    answers: ["season", "phase", "period", "stage"],
+  },
+  {
+    quiz_id: 5,
+    question:
+      "Make sure you _______ a hotel before you come to our island, especially in the summer.",
+    answers: ["book", "keep", "put", "buy"],
+  },
+  {
+    quiz_id: 6,
+    question: "Captain Cook discovered Australia on a _______ to the Pacific.",
+    answers: ["vacation", "travel", "cruise", "voyage"],
+  },
+  {
+    quiz_id: 7,
+    question:
+      " Most tourist attractions in London charge an admission ________.",
+    answers: ["fare", "ticket", "fee", "pay"],
+  },
+  {
+    quiz_id: 8,
+    question: "The hotel where we are _______ is quite luxurious.",
+    answers: ["living", "existing", "remaining", "staying"],
+  },
+  {
+    quiz_id: 9,
+    question: "Is English an ________ language in your country?",
+    answers: ["mother", "official", "living", "old"],
+  },
+  {
+    quiz_id: 10,
+    question: "He spoke a ______ of French that we found hard to understand.",
+    answers: ["slang", "jargon", "dialect", "language"],
+  },
+];
+const results = [
+  {
+    quiz_id: 1,
+    answer: "area",
+  },
+  {
+    quiz_id: 3,
+    answer: "reach",
+  },
+  {
+    quiz_id: 2,
+    answer: "guide",
+  },
+  {
+    quiz_id: 4,
+    answer: "season",
+  },
+  {
+    quiz_id: 5,
+    answer: "book",
+  },
+  {
+    quiz_id: 6,
+    answer: "voyage",
+  },
+  {
+    quiz_id: 7,
+    answer: "fee",
+  },
+  {
+    quiz_id: 8,
+    answer: "staying",
+  },
+  {
+    quiz_id: 9,
+    answer: "official",
+  },
+  {
+    quiz_id: 10,
+    answer: "dialect",
+  },
+];
+// ________QUIZ_APP________________
+const quizTimer = document.querySelector("#timer");
+const quizProgress = document.querySelector("#progress");
+const quizProgressText = document.querySelector("#progress_text");
+const quizSubmit = document.querySelector("#quiz_submit");
+const quizPrev = document.querySelector("#quiz_prev");
+const quizNext = document.querySelector("#quiz_next");
+const quizCount = document.querySelector(".quiz_question h5");
+const quizAnswers = document.querySelectorAll(".quiz_question ul li");
+let quizQuestions = document.querySelectorAll(".quiz_numbers ul li");
+const quizQuestionList = document.querySelector(".quiz_numbers ul");
+const quizAnswersItem = document.querySelectorAll(".quiz_answer_item");
+const quizTitle = document.querySelector("#quiz_title");
+let currentIndex = null;
+let listSubmit = []; // Lưu index đáp án đã chọn
+let listResults = []; // Lưu index kết quả đúng, theo mảng đã random
+let isSubmit = false;
+function randomArray(array) {
+  return (array = array.sort(() => Math.random() - Math.random()));
+}
+const quiz = {
+  randomQuestions: function () {
+    questions = randomArray(questions);
+    questions.forEach((q) => {
+      q.answers = randomArray(q.answers);
+});
+    console.log(questions);
+  },
+  renderQuestionList: function () {
+    let render = "";
+    questions.forEach((question, index) => {
+      render += `<li>${index + 1}</li>`;
+    });
+    quizQuestionList.innerHTML = render;
+    quizQuestions = document.querySelectorAll(".quiz_numbers ul li");
+  },
+  renderCurrentQuestion: function () {
+    quizCount.innerText = `Question ${currentIndex + 1} of ${questions.length}`;
+    quizTitle.innerText = questions[currentIndex].question;
+    quizAnswersItem.forEach((answer, index) => {
+      answer.innerText = questions[currentIndex].answers[index];
+    });
+  },
+  renderProgress: function () {
+    quizProgress.style = `stroke-dasharray: 0 9999;`;
+    quizProgressText.innerText = `0/${questions.length}`;
+  },
+  renderTimer: function () {
+    var timer = 15;
+    let _this = this;
+    // Lấy thẻ p có id là "timer"
+    var countdownElement = document.getElementById("timer");
 
-            // Disable all inputs after submission  
-            var inputs = document.querySelectorAll('#quizForm input[type="radio"]');  
-            inputs.forEach(input => input.disabled = true);  
-        }  
-    </script>  
-</body>  
+    // Hàm cập nhật thời gian
+    function updateTimer() {
+      var minutes = Math.floor(timer / 60);
+      var seconds = timer % 60;
+
+      // Định dạng thời gian thành chuỗi HH:MM:SS
+      var timerString =
+        (minutes < 10 ? "0" : "") +
+        minutes +
+        ":" +
+        (seconds < 10 ? "0" : "") +
+        seconds;
+
+      // Gán thời gian đã định dạng vào thẻ p
+      countdownElement.innerHTML = timerString;
+
+      // Giảm thời gian mỗi giây
+      timer--;
+      // Kiểm tra nếu hết thời gian
+      if (timer < 0) {
+        countdownElement.innerHTML = "Hết thời gian!";
+        _this.handleCheckResults();
+      }
+      if (isSubmit) {
+        clearInterval(intervalId);
+      }
+    }
+
+    // Gọi hàm updateTimer mỗi giây
+    var intervalId = setInterval(updateTimer, 1000);
+  },
+  renderResults: function () {
+    if (listResults[currentIndex] === listSubmit[currentIndex]) {
+      quizAnswers.forEach((item) => {
+        item.classList.remove("incorrect");
+      });
+        quizAnswers[listResults[currentIndex]].classList.add("active");
+    } else {
+      quizAnswers.forEach((item) => {
+        item.classList.remove("active");
+        item.classList.remove("incorrect");
+      });
+      quizAnswers[listResults[currentIndex]].classList.add("active");
+      quizAnswers[listSubmit[currentIndex]].classList.add("incorrect");
+    }
+  },
+  handleProgress: function (correct) {
+    const r = quizProgress.getAttribute("r");
+    if (!isSubmit) {
+      const progressLen = listSubmit.filter((item) => item >= 0);
+      quizProgress.style = `stroke-dasharray: ${
+        (2 * Math.PI * r * progressLen.length) / questions.length
+      } 9999;`;
+      quizProgressText.innerText = `${progressLen.length}/${questions.length}`;
+    } else {
+      quizProgress.style = `stroke-dasharray: ${
+        (2 * Math.PI * r * correct) / questions.length
+      } 9999;`;
+      quizProgressText.innerText = `${correct}/${questions.length}`;
+    }
+  },
+  handleQuestionList: function () {
+    quizQuestions.forEach((item,index)
+=>{
+	item.addEventListener("click", () => {
+        item.scrollIntoView({
+          behavior: "smooth",
+          inline: "center",
+        });
+        quizQuestions.forEach((item) => item.classList.remove("active"));
+        item.classList.add("active");
+        currentIndex = index;
+        this.renderCurrentQuestion();
+        quizAnswers.forEach((item) => item.classList.remove("active"));
+        const selected = listSubmit[currentIndex];
+        selected >= 0 && quizAnswers[selected].click();
+        if (isSubmit) {
+          this.renderResults();
+        }
+      });
+    });
+    quizQuestions[0].click();
+  },
+  handleAnswer: function () {
+    quizAnswers.forEach((answer, index) => {
+      answer.addEventListener("click", () => {
+        if (!isSubmit) {
+          quizAnswers.forEach((item) => item.classList.remove("active"));
+          answer.classList.add("active");
+          quizQuestions[currentIndex].classList.add("selected");
+          listSubmit[currentIndex] = index;
+          console.log(listSubmit);
+          this.handleProgress();
+        } else {
+          return;
+        }
+      });
+    });
+  },
+  handleNext: function () {
+    quizNext.addEventListener("click", () => {
+      ++currentIndex;
+      if (currentIndex > questions.length - 1) {
+        currentIndex = 0;
+      }
+      quizQuestions[currentIndex].click();
+    });
+  },
+  handlePrev: function () {
+    quizPrev.addEventListener("click", () => {
+      --currentIndex;
+      if (currentIndex < 0) {
+        currentIndex = questions.length - 1;
+      }
+      quizQuestions[currentIndex].click();
+    });
+  },
+  handleSubmit: function () {
+    quizSubmit.addEventListener("click", () => {
+      const progressLen = listSubmit.filter((item) => item >= 0);
+      if (progressLen.length === questions.length) {
+        this.handleCheckResults();
+      } else {
+        alert("Bạn chưa chọn hết đáp án");
+      }
+    });
+  },
+  handleCheckResults: function () {
+    let correct = 0;
+    questions.forEach((item, index) => {
+      const result = results.find((r) => r.quiz_id === item.quiz_id);
+      if (item.answers[listSubmit[index]] === result.answer) {
+        listResults[index] = listSubmit[index];
+        correct++;
+      } else {
+        quizQuestions[index].classList.add("incorrect");
+        listResults[index] = item.answers.indexOf(result.answer);
+      }
+    });
+    isSubmit = true;
+    this.handleProgress(correct);
+  },
+  handleKeyDown: function () {
+    document.addEventListener("keydown", (e) => {
+      console.log(e.key);
+      switch (e.key) {
+        case "ArrowRight":
+          return quizNext.click();
+        case "ArrowLeft":
+          return quizPrev.click();
+        default:
+          return false;
+      }
+    });
+  },
+  render: function () {
+    this.renderQuestionList();
+    this.renderProgress();
+    this.renderTimer();
+  },
+  handle: function () {
+    this.handleQuestionList();
+    this.handleAnswer();
+    this.handleNext();
+    this.handlePrev();
+	  this.handleKeyDown();
+    this.handleSubmit();
+  },
+  start: function () {
+    this.randomQuestions();
+    this.render();
+    this.handle();
+  },
+};
+quiz.start();
+  </script>
 </html>
