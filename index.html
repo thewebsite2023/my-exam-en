@@ -22,7 +22,7 @@
                   </li>          
             </ul>
             <form class="d-flex" role="search">
-              <a href="https://thewebsite2023.github.io/" class="btn btn-outline-danger">Đăng xuất</a>
+              <button class="btn btn-outline-danger" onclick="logout()">Đăng xuất</button>
             </form>
           </div>
         </div>
@@ -46,6 +46,12 @@
         <button onclick="baithiso4()" class="btn btn-outline-primary">Vào thi ngay</button>
       </div>
       <script>
+          function logout1() {
+              window.location.href = 'https://thewebsite2023.github.io/login';
+          }
+          function logout() {
+              window.location.href = 'https://thewebsite2023.github.io/';
+          }
         function baithiso1() {
             window.location.href = 'https://thewebsite2023.github.io/my-exam-en/baithiso1_en';
         }
@@ -59,7 +65,7 @@
             window.location.href = 'https://thewebsite2023.github.io/my-exam-en/baithiso4_en';
         }
       </script>
-          <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <!--div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -70,6 +76,21 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Tôi hiểu rồi</button>
+      </div>
+    </div>
+  </div>
+</div-->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Thông báo</h1>
+      </div>
+      <div class="modal-body">
+         Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary" onclick="logout1()">Tôi hiểu rồi</button>
       </div>
     </div>
   </div>
