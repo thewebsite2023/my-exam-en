@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz UI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="./main.css" />
+  <style>
+body{
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+-o-user-select: none;
+user-select: none;
+}
+</style><script type=”text/JavaScript”>
+function killCopy(e){
+return false
+}
+function reEnable(){
+return true
+}
+document.onselectstart=new Function (“return false”)
+if (window.sidebar){
+document.onmousedown=killCopy
+document.onclick=reEnable
+}
+</script>
+<script language="JavaScript">
+    window.onload = function() {
+        document.addEventListener("contextmenu", function(e) {
+            e.preventDefault();
+        }, false);
+        document.addEventListener("keydown", function(e) {
+            //document.onkeydown = function(e) {
+            // "I" key
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 73) {
+                disabledEvent(e);
+            }
+            // "J" key
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 74) {
+                disabledEvent(e);
+            }
+            // "S" key + macOS
+            if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
+                disabledEvent(e);
+            }
+            // "U" key
+            if (e.ctrlKey && e.keyCode == 85) {
+                disabledEvent(e);
+            }
+            // "F12" key
+            if (event.keyCode == 123) {
+                disabledEvent(e);
+            }
+        }, false);
+ 
+        function disabledEvent(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            } else if (window.event) {
+                window.event.cancelBubble = true;
+            }
+            e.preventDefault();
+            return false;
+        }
+    };
+</script>
+  </head>
+  <body>
+    <div class="quiz_wrapper">
+      <div class="quiz_header">
+        <div class="quiz_timer">
+          <i class="fa-regular fa-clock"></i>
+          <div class="quiz_timer_text">
+            <span>Thời gian:</span>
+            <p id="timer"></p>
+          </div>
+        </div>
+<button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Quay lại trang chủ
+</button>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Xác nhận</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Bạn có muốn thoát bài thi không?
+        <div style="color: red;">Lứu ý: Khi bạn thoát ra ngoài, bài thi của bạn sẽ không được tính điểm<br>Vui lòng nộp bài trước khi thoát bài thi</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+  <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+</svg>Không</button>
+        <a href="https://thewebsite2023.github.io/my-exam-en/" class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+  <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"/>
+</svg>Có</a>
+      </div>
+    </div>
+  </div>
+</div>
+        <button id="quiz_submit">Nộp bài</button>
+      </div>
+      <div class="quiz_container">
+        <div class="quiz_question">
+          <h5>Question 1 of 10</h5>
+          <p id="quiz_title">
+            Lưu ý: Quyền truy cập bài thi này đã bị đóng
+          </p>
+          <ul>
+            <li><span>A.</span><span class="quiz_answer_item"></span></li>
+            <li><span>B.</span><span class="quiz_answer_item"></span></li>
+            <li><span>C.</span><span class="quiz_answer_item"></span></li>
+            <li><span>D.</span><span class="quiz_answer_item"></span></li>
+          </ul>
+        </div>
+        <div class="quiz_progress">
+          <svg>
+            <circle r="50"></circle>
+            <circle id="progress" r="50"></circle>
+          </svg>
+          <span id="progress_text">0/10</span>
+        </div>
+      </div>
+      <div class="quiz_numbers">
+        <button id="quiz_prev">Prev</button>
+        <ul></ul>
+        <button id="quiz_next">Next</button>
+      </div>
+    </div>
+  </body>
+  <style>
+    * {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  list-style: none;
+}
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}
+body {
+  font-size: 1.6rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to bottom, #f3f7ec, #bce2e7);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  color: #333;
+  align-items: center;
+}
+
+:root {
+  --main-clr: rgb(0, 153, 255);
+}
+.quiz_wrapper {
+  background-color: white;
+  min-height: 50rem;
+  width: 80rem;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  padding: 4rem;
+}
+.quiz_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 4rem;
+}
+.quiz_timer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.quiz_timer > i {
+  font-size: 3rem;
+}
+.quiz_timer_text {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+}
+.quiz_timer_text > span {
+  font-size: 1rem;
+  color: #333333a1;
+}
+.quiz_timer_text > p {
+  color: var(--main-clr);
+  letter-spacing: 3px;
+}
+button {
+  padding: 0.8rem 2.5rem;
+  background: var(--main-clr);
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: 0.5s;
+}
+.quiz_container {
+  display: flex;
+}
+.quiz_question {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.quiz_progress {
+  width: 200px;
+  position: relative;
+  margin-top: 3rem;
+}
+.quiz_progress svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  pointer-events: none;
+}
+.quiz_progress svg circle {
+  transform: translate(50%, 50%);
+  fill: none;
+  stroke: #ddd;
+  stroke-width: 10px;
+  stroke-linecap: round;
+}
+#progress {
+  stroke: var(--main-clr);
+  stroke-dasharray: 250 9999;
+  transition: 0.5s;
+}
+#progress_text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--main-clr);
+}
+.quiz_question ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+.quiz_question ul li {
+  width: 40%;
+  padding: 1rem 2rem;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  cursor: pointer;
+}
+.quiz_question ul li.active {
+  background: var(--main-clr);
+  color: white;
+  transition: 0.5s;
+}
+.quiz_question ul li.incorrect {
+  background: red;
+  color: white;
+  transition: 0.5s;
+}
+.quiz_question ul li span:nth-child(2) {
+  margin-left: 1rem;
+}
+.quiz_question > p {
+  font-weight: bold;
+  font-size: 1.6rem;
+  height: 6rem;
+}
+.quiz_numbers {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 5rem;
+}
+.quiz_numbers > ul {
+  display: flex;
+  gap: 1.5rem;
+  width: 75%;
+  overflow-x: auto;
+  padding: 1px;
+}
+ul::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+ul {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.quiz_numbers > ul > li {
+  width: 4rem;
+  height: 4rem;
+  flex-shrink: 0;
+  text-align: center;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  line-height: 4rem;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+.quiz_numbers > ul > li.selected {
+  background-color: var(--main-clr);
+  color: white;
+}
+
+.quiz_numbers > ul > li.active {
+  border: 2px solid var(--main-clr);
+}
+.quiz_numbers > ul > li.incorrect {
+  background-color: red;
+  color: white;
+}
+.quiz_numbers > button {
+  padding: 0.5rem 2rem;
+  background: white;
+  border: 1px solid var(--main-clr);
+  color: var(--main-clr);
+}
+  </style>
+  <script>
+    // ________FAKE_DATA_______________
+let questions = [
+  {
+    quiz_id: 1,
+    question:
+      "Are there _______ oranges?",
+    answers: ["are", "any", "some", "is"],
+  },
+  {
+    quiz_id: 2,
+    question:
+      "How often ________ get up",
+    answers: ["does she", "did she", "do she", "she"],
+  },
+  {
+    quiz_id: 3,
+    question:
+      "Elena: What are you doing? - Lisa: I ________ my homework",
+    answers: ["doing", "are doing", "is doing", "am doing"],
+  },
+  {
+    quiz_id: 4,
+    question: "I always __________ go to school by bus",
+    answers: ["how to", "go to", "get to", "goes to"],
+  },
+  {
+    quiz_id: 5,
+    question:
+      "He wants to ________ a phone call to his parents",
+    answers: ["maked", "makes", "making", "make"],
+  },
+  {
+    quiz_id: 6,
+    question: "He always _________ ten cigarettes a day",
+    answers: ["smokes", "smoking", "smoke", "smoked"],
+  },
+  {
+    quiz_id: 7,
+    question:
+      "I ________ TV at the moment",
+    answers: ["are watching", "am watch", "am watches", "am watching"],
+  },
+  {
+    quiz_id: 8,
+    question: "I am going on holiday _________ his parents",
+    answers: ["about", "on", "with", "in"],
+  },
+  {
+    quiz_id: 9,
+    question: "Is English an ________ language in your country?",
+    answers: ["mother", "official", "living", "old"],
+  },
+  {
+    quiz_id: 10,
+    question: "He spoke a ______ of French that we found hard to understand.",
+    answers: ["slang", "jargon", "dialect", "language"],
+  },
+];
+const results = [
+  {
+    quiz_id: 1,
+    answer: "any",
+  },
+  {
+    quiz_id: 2,
+    answer: "does she",
+  },
+  {
+    quiz_id: 3,
+    answer: "am doing",
+  },
+  {
+    quiz_id: 4,
+    answer: "go to",
+  },
+  {
+    quiz_id: 5,
+    answer: "make",
+  },
+  {
+    quiz_id: 6,
+    answer: "smokes",
+  },
+  {
+    quiz_id: 7,
+    answer: "am watching",
+  },
+  {
+    quiz_id: 8,
+    answer: "with",
+  },
+  {
+    quiz_id: 9,
+    answer: "official",
+  },
+  {
+    quiz_id: 10,
+    answer: "dialect",
+  },
+];
+// ________QUIZ_APP________________
+const quizTimer = document.querySelector("#timer");
+const quizProgress = document.querySelector("#progress");
+const quizProgressText = document.querySelector("#progress_text");
+const quizSubmit = document.querySelector("#quiz_submit");
+const quizPrev = document.querySelector("#quiz_prev");
+const quizNext = document.querySelector("#quiz_next");
+const quizCount = document.querySelector(".quiz_question h5");
+const quizAnswers = document.querySelectorAll(".quiz_question ul li");
+let quizQuestions = document.querySelectorAll(".quiz_numbers ul li");
+const quizQuestionList = document.querySelector(".quiz_numbers ul");
+const quizAnswersItem = document.querySelectorAll(".quiz_answer_item");
+const quizTitle = document.querySelector("#quiz_title");
+let currentIndex = null;
+let listSubmit = []; // Lưu index đáp án đã chọn
+let listResults = []; // Lưu index kết quả đúng, theo mảng đã random
+let isSubmit = false;
+function randomArray(array) {
+  return (array = array.sort(() => Math.random() - Math.random()));
+}
+const quiz = {
+  randomQuestions: function () {
+    questions = randomArray(questions);
+    questions.forEach((q) => {
+      q.answers = randomArray(q.answers);
+    });
+    console.log(questions);
+  },
+  renderQuestionList: function () {
+    let render = "";
+    questions.forEach((question, index) => {
+      render += `<li>${index + 1}</li>`;
+    });
+    quizQuestionList.innerHTML = render;
+    quizQuestions = document.querySelectorAll(".quiz_numbers ul li");
+  },
+  renderCurrentQuestion: function () {
+    quizCount.innerText = `Question ${currentIndex + 1} of ${questions.length}`;
+    quizTitle.innerText = questions[currentIndex].question;
+    quizAnswersItem.forEach((answer, index) => {
+      answer.innerText = questions[currentIndex].answers[index];
+    });
+  },
+  renderProgress: function () {
+    quizProgress.style = `stroke-dasharray: 0 9999;`;
+    quizProgressText.innerText = `0/${questions.length}`;
+  },
+  renderTimer: function () {
+    var timer = 1800;
+    let _this = this;
+    // Lấy thẻ p có id là "timer"
+    var countdownElement = document.getElementById("timer");
+
+    // Hàm cập nhật thời gian
+    function updateTimer() {
+      var minutes = Math.floor(timer / 60);
+      var seconds = timer % 60;
+
+      // Định dạng thời gian thành chuỗi HH:MM:SS
+      var timerString =
+        (minutes < 10 ? "0" : "") +
+        minutes +
+        ":" +
+        (seconds < 10 ? "0" : "") +
+        seconds;
+
+      // Gán thời gian đã định dạng vào thẻ p
+      countdownElement.innerHTML = timerString;
+
+      // Giảm thời gian mỗi giây
+      timer--;
+      // Kiểm tra nếu hết thời gian
+      if (timer < 0) {
+        countdownElement.innerHTML = "Hết thời gian!";
+        _this.handleCheckResults();
+      }
+      if (isSubmit) {
+        clearInterval(intervalId);
+      }
+    }
+
+    // Gọi hàm updateTimer mỗi giây
+    var intervalId = setInterval(updateTimer, 1000);
+  },
+  renderResults: function () {
+    if (listResults[currentIndex] === listSubmit[currentIndex]) {
+      quizAnswers.forEach((item) => {
+        item.classList.remove("incorrect");
+      });
+        quizAnswers[listResults[currentIndex]].classList.add("active");
+    } else {
+      quizAnswers.forEach((item) => {
+        item.classList.remove("active");
+        item.classList.remove("incorrect");
+      });
+      quizAnswers[listResults[currentIndex]].classList.add("active");
+      quizAnswers[listSubmit[currentIndex]].classList.add("incorrect");
+    }
+  },
+  handleProgress: function (correct) {
+    const r = quizProgress.getAttribute("r");
+    if (!isSubmit) {
+      const progressLen = listSubmit.filter((item) => item >= 0);
+      quizProgress.style = `stroke-dasharray: ${
+        (2 * Math.PI * r * progressLen.length) / questions.length
+      } 9999;`;
+      quizProgressText.innerText = `${progressLen.length}/${questions.length}`;
+    } else {
+      quizProgress.style = `stroke-dasharray: ${
+        (2 * Math.PI * r * correct) / questions.length
+      } 9999;`;
+      quizProgressText.innerText = `${correct}/${questions.length}`;
+    }
+  },
+  handleQuestionList: function () {
+    quizQuestions.forEach((item, index) => {   item.addEventListener("click", () => {
+        item.scrollIntoView({
+          behavior: "smooth",
+          inline: "center",
+        });
+        quizQuestions.forEach((item) => item.classList.remove("active"));
+        item.classList.add("active");
+        currentIndex = index;
+        this.renderCurrentQuestion();
+        quizAnswers.forEach((item) => item.classList.remove("active"));
+        const selected = listSubmit[currentIndex];
+        selected >= 0 && quizAnswers[selected].click();
+        if (isSubmit) {
+          this.renderResults();
+        }
+      });
+    });
+    quizQuestions[0].click();
+  },
+  handleAnswer: function () {
+    quizAnswers.forEach((answer, index) => {
+      answer.addEventListener("click", () => {
+        if (!isSubmit) {
+          quizAnswers.forEach((item) => item.classList.remove("active"));
+          answer.classList.add("active");
+          quizQuestions[currentIndex].classList.add("selected");
+          listSubmit[currentIndex] = index;
+          console.log(listSubmit);
+          this.handleProgress();
+        } else {
+          return;
+        }
+      });
+    });
+  },
+  handleNext: function () {
+    quizNext.addEventListener("click", () => {
+      ++currentIndex;
+      if (currentIndex > questions.length - 1) {
+        currentIndex = 0;
+      }
+      quizQuestions[currentIndex].click();
+    });
+  },
+  handlePrev: function () {
+    quizPrev.addEventListener("click", () => {
+      --currentIndex;
+      if (currentIndex < 0) {
+        currentIndex = questions.length - 1;
+      }
+      quizQuestions[currentIndex].click();
+    });
+  },
+  handleSubmit: function () {
+    quizSubmit.addEventListener("click", () => {
+      const progressLen = listSubmit.filter((item) => item >= 0);
+        this.handleCheckResults();
+    });
+  },
+  handleCheckResults: function () {
+    let correct = 0;
+    questions.forEach((item, index) => {
+      const result = results.find((r) => r.quiz_id === item.quiz_id);
+      if (item.answers[listSubmit[index]] === result.answer) {
+        listResults[index] = listSubmit[index];
+        correct++;
+      } else {
+        quizQuestions[index].classList.add("incorrect");
+        listResults[index] = item.answers.indexOf(result.answer);
+      }
+    });
+    isSubmit = true;
+    this.handleProgress(correct);
+  },
+  handleKeyDown: function () {
+    document.addEventListener("keydown", (e) => {
+      console.log(e.key);
+      switch (e.key) {
+        case "ArrowRight":
+          return quizNext.click();
+        case "ArrowLeft":
+          return quizPrev.click();
+        default:
+          return false;
+      }
+    });
+  },
+  render: function () {
+    this.renderQuestionList();
+    this.renderProgress();
+    this.renderTimer();
+  },
+  handle: function () {
+    this.handleQuestionList();
+    this.handleAnswer();
+    this.handleNext();
+    this.handlePrev();
+    this.handleKeyDown();
+    this.handleSubmit();
+  },
+  start: function () {
+    this.randomQuestions();
+    this.render();
+    this.handle();
+  },
+};
+quiz.start();
+  </script>
+</html>   
