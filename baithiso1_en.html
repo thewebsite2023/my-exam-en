@@ -697,6 +697,8 @@ if (localStorage.getItem("quizCompleted")) {
   // Hiển thị thông báo hoàn thành
   document.querySelector(".quiz_wrapper").innerHTML = `
     <h2>Bạn đã hoàn thành bài thi. Điểm của bạn: ${localStorage.getItem("quizScore")}</h2>
+    <br>
+    <button class="btn btn-outline-danger" onclick="window.location = 'https://thewebsite2023.github.io/my-exam-en/'">Quay lại trang chủ</button>
   `;
 }
 document.querySelector(".quiz_container").classList.add("hidden");
