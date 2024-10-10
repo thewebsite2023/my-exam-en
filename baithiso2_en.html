@@ -654,5 +654,49 @@ const quiz = {
   },
 };
 quiz.start();
+    let isCompleted = localStorage.getItem("quizCompleted");
+
+// Kiểm tra trạng thái bài thi khi tải trang
+if (isCompleted) {
+  document.querySelector(".quiz_wrapper").innerHTML = `
+    <h2>Bạn đã hoàn thành bài thi này. Điểm của bạn: ${localStorage.getItem("quizScore")}</h2>
+  `;
+} else {
+  quiz.renderTimer();
+}
+
+// Ẩn các câu hỏi sau khi nộp bài và lưu kết quả vào localStorage
+quizSubmit.addEventListener("click", () => {
+  quiz.handleCheckResults();  // Nộp bài và tính điểm
+  let score = quiz.calculateScore();  // Giả sử có một hàm tính điểm
+  localStorage.setItem("quizScore", score);
+  localStorage.setItem("quizCompleted", true);
+
+  // Hiển thị điểm sau khi nộp bài
+  document.querySelector(".quiz_wrapper").innerHTML = `
+    <h2>Bạn đã hoàn thành bài thi. Điểm của bạn: ${score}</h2>
+  `;
+});
+
+// Hàm tính điểm
+quiz.calculateScore = function () {
+  let correct = 0;
+  listSubmit.forEach((answer, index) => {
+    if (answer === listResults[index]) correct++;
+  });
+  return correct;
+};
+
+// Nút Nộp bài sẽ bị vô hiệu hóa nếu người dùng đã nộp bài
+if (isCompleted) {
+  quizSubmit.disabled = true;
+}
+if (localStorage.getItem("quizCompleted")) {
+  // Hiển thị thông báo hoàn thành
+  document.querySelector(".quiz_wrapper").innerHTML = `
+    <h2>Bạn đã hoàn thành bài thi. Điểm của bạn: ${localStorage.getItem("quizScore")}</h2>
+  `;
+}
+document.querySelector(".quiz_container").classList.add("hidden");
   </script>
 </html>   
