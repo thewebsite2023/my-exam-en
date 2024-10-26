@@ -73,67 +73,6 @@ document.onclick=reEnable
 </script>
   </head>
   <body>
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="staticBackdropLabel">Xác thực</h1>
-            </div>
-            <div class="modal-body">
-                <h6>Vì lý do bảo mật, vui lòng xác thực reCAPTCHA để truy cập vào đề thi</h6>
-                <div class="g-recaptcha" data-sitekey="6LdtnpApAAAAANozI1TBzaatbNLF0EK23VY8xkwz" data-callback="onRecaptchaSuccess"></div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal" id="verifyButton" disabled>Xác thực</button>
-            </div>
-          </div>
-        </div>
-      </div>
-<script>
-    $(document).ready(function(){  
-    $('#staticBackdrop').modal('show');  
-});
-</script>
-    <script>
-        // script.js
-
-// Hàm này sẽ được gọi khi người dùng hoàn thành reCAPTCHA
-function onRecaptchaSuccess(token) {
-    // Hiển thị nút xác thực khi reCAPTCHA hoàn thành
-    document.getElementById("verifyButton").disabled = false;
-
-    // Lưu token để dùng khi xác thực
-    window.recaptchaToken = token;
-}
-
-// Khi người dùng nhấn vào nút "Xác thực"
-document.getElementById("verifyButton").addEventListener("click", function () {
-    const token = window.recaptchaToken;
-
-    if (!token) {
-        document.getElementById("result").textContent = "Vui lòng xác minh reCAPTCHA.";
-        return;
-    }
-
-    // Gửi token đến máy chủ để xác thực
-    fetch("YOUR_SERVER_URL/verify-recaptcha", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ token: token })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            document.getElementById("result").textContent = "Xác thực thành công!";
-        } else {
-            document.getElementById("result").textContent = "Xác thực thất bại. Vui lòng thử lại.";
-        }
-    });
-});
-
-    </script>
     <div class="quiz_wrapper">
       <div class="quiz_header">
         <div class="quiz_timer">
