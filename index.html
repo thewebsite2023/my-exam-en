@@ -69,10 +69,10 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="g-recaptcha" data-sitekey="6LdtnpApAAAAANozI1TBzaatbNLF0EK23VY8xkwz" data-callback="enableButton"></div>
+        <div class="g-recaptcha" data-sitekey="6LdtnpApAAAAANozI1TBzaatbNLF0EK23VY8xkwz" data-callback="enableButton1"></div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" onclick="openInNewTab()" disabled id="submitBtn">Vào thi</button>
+        <button type="button" class="btn btn-success" onclick="openInNewTab()" disabled id="submitBtn1">Vào thi</button>
       </div>
     </div>
   </div>
@@ -80,6 +80,9 @@
 <script>
     function enableButton() {
             document.getElementById("submitBtn").disabled = false;
+        }
+    function enableButton1() {
+            document.getElementById("submitBtn1").disabled = false;
         }
     function openInNewTab1() {
       // Mở liên kết trong tab mới
