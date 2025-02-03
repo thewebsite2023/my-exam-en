@@ -86,35 +86,24 @@
         </table>
     </div>
 <script>
-        function openInNewTab9() {
-      // Mở liên kết trong tab mới
-      window.open('https://forms.gle/F3omK6Hzr3TBHhao7', '_blank');
-    }
-    function openInNewTab10() {
-      // Mở liên kết trong tab mới
-      window.open('https://forms.gle/qrMN1w2Skcmxgrsx5', '_blank');
-    }
     function logout() {
-        // Xóa thông tin đăng nhập (nếu có sử dụng sessionStorage hoặc localStorage)
-        sessionStorage.clear();
-        localStorage.clear();
+        // Xóa thông tin đăng nhập (có thể thay đổi tùy vào cách bạn lưu trạng thái đăng nhập)
+        localStorage.removeItem("isLoggedIn");
         
-        // Chuyển hướng đến trang đăng nhập
-        window.location.href = 'https://thewebsite2023.github.io/login';
-        
-        // Xóa lịch sử để ngăn quay lại trang trước đó
-        setTimeout(function() {
-            history.pushState(null, null, 'https://thewebsite2023.github.io/login');
-        }, 0);
+        // Chuyển hướng đến trang đăng nhập (thay bằng URL trang đăng nhập của bạn)
+        window.location.href = "https://thewebsite2023.github.io/login";
     }
-    
-    // Chặn nút quay lại sau khi đăng xuất
-    window.onload = function() {
-        history.pushState(null, null, document.URL);
-        window.addEventListener('popstate', function() {
-            history.pushState(null, null, document.URL);
-        });
-    };
+
+    // Ngăn người dùng nhấn Back sau khi đăng xuất
+    (function preventBack() {
+        if (!localStorage.getItem("isLoggedIn")) {
+            window.location.href = "https://thewebsite2023.github.io/login"; // Chuyển hướng nếu chưa đăng nhập
+        }
+        window.history.pushState(null, "", window.location.href);
+        window.onpopstate = function () {
+            window.history.pushState(null, "", window.location.href);
+        };
+    })();
     function openInNewTab1() {
       // Mở liên kết trong tab mới
       window.open('https://forms.gle/VMCLbxTJk2fbo88G9', '_blank');
