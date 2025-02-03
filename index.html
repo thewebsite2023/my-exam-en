@@ -35,62 +35,65 @@
             </tr>
             <tr>
                 <td>Tiếng Anh</td>
-                <td>Đề Kiểm tra Tiếng Anh định kỳ 1 (05/11/2024 - 05/12/2024)</td>
-                <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#abc2">Vào thi</button></td>
+                <td>Đề Kiểm tra Tiếng Anh định kỳ 1</td>
+                <td><button class="btn btn-success" onclick="OpenInNewTab1">Vào thi</button></td>
             </tr>
             <tr>
                 <td>Tiếng Anh</td>
-                <td>Đề Kiểm tra Tiếng Anh định kỳ 2 (05/12/2024 - 05/01/2024)</td>
-                <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#abc1">Vào thi</button></td>
+                <td>Đề Kiểm tra Tiếng Anh định kỳ 2</td>
+                <td><button class="btn btn-success" onclick="OpenInNewTab2">Vào thi</button></td>
+            </tr>
+            <tr>
+                <td>Tiếng Anh</td>
+                <td>Đề Kiểm tra Tiếng Anh định kỳ 3</td>
+                <td><button class="btn btn-success" onclick="OpenInNewTab3">Vào thi</button></td>
+            </tr>
+            <tr>
+                <td>Tiếng Anh</td>
+                <td>Đề Kiểm tra Tiếng Anh định kỳ 4</td>
+                <td><button class="btn btn-success" onclick="OpenInNewTab4">Vào thi</button></td>
             </tr>
         </table>
     </div>
-    <div class="modal fade" id="abc2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Vì lý do bảo mật, vui lòng xác minh bạn không phải là robot để truy cập vào đề thi</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <div class="g-recaptcha" data-sitekey="6LdtnpApAAAAANozI1TBzaatbNLF0EK23VY8xkwz" data-callback="enableButton"></div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-success" onclick="openInNewTab1()" disabled id="submitBtn">Vào thi</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    <div class="modal fade" id="abc1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Vì lý do bảo mật, vui lòng xác minh bạn không phải là robot để truy cập vào đề thi</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="g-recaptcha" data-sitekey="6LdtnpApAAAAANozI1TBzaatbNLF0EK23VY8xkwz" data-callback="enableButton1"></div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-success" onclick="openInNewTab()" disabled id="submitBtn1">Vào thi</button>
-      </div>
-    </div>
-  </div>
-</div>
 <script>
-    function enableButton() {
-            document.getElementById("submitBtn").disabled = false;
-        }
-    function enableButton1() {
-            document.getElementById("submitBtn1").disabled = false;
+    function logout() {
+        window.open('https://thưebsite2023.github.io/login', '_blank');
         }
     function openInNewTab1() {
       // Mở liên kết trong tab mới
-      window.open('https://docs.google.com/forms/d/e/1FAIpQLSc_XT_gxDLW24-Oo9DFFs_kN4N8Rt84dFY-ZhXTbZHoMpxCjw/viewform', '_blank');
+      window.open('https://forms.gle/VMCLbxTJk2fbo88G9', '_blank');
     }
-    function openInNewTab() {
+    function openInNewTab2() {
       // Mở liên kết trong tab mới
-      window.open('https://docs.google.com/forms/d/e/1FAIpQLScOYzK9KDDM8YHKBDM4eDtoblyUQOANxi3WfRM7BDl3aB-gWA/viewform', '_blank');
+      window.open('https://forms.gle/NNFpJdyMsHsibh9H9', '_blank');
+    }
+    function openInNewTab3() {
+      // Mở liên kết trong tab mới
+      window.open('https://forms.gle/nwoYFS3CoAbBdUho9', '_blank');
+    }
+    function openInNewTab4() {
+      // Mở liên kết trong tab mới
+      window.open('https://forms.gle/NNFpJdyMsHsibh9H9', '_blank');
+    }
+    function openInNewTab5() {
+      // Mở liên kết trong tab mới
+      window.open('https://forms.gle/PeRNG5VbqSFU95Fq8', '_blank');
+    }
+    function openInNewTab6() {
+      // Mở liên kết trong tab mới
+      window.open('https://forms.gle/ZaQZiq5XUMqgGjH68', '_blank');
+    }
+    function openInNewTab7() {
+      // Mở liên kết trong tab mới
+      window.open('https://forms.gle/G4t2UJ5Gja2Bjwa88', '_blank');
+    }
+    function openInNewTab8() {
+      // Mở liên kết trong tab mới
+      window.open('https://forms.gle/HfLm55fpLxfgg2Qm7', '_blank');
+    }
+    function openInNewTab9() {
+      // Mở liên kết trong tab mới
+      window.open('https://forms.gle/F3omK6Hzr3TBHhao7', '_blank');
     }
   </script>
 <!--     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
