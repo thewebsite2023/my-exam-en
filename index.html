@@ -21,7 +21,7 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">        
         </ul>
         <form class="d-flex" role="search">
-          <a class="btn btn-outline-danger" onclick="logout()">Đăng xuất</a>
+          <a href="https://thewebsite2023.github.io/login/" class="btn btn-outline-danger">Đăng xuất</a>
         </form>
       </div>
     </div>
@@ -86,24 +86,6 @@
         </table>
     </div>
 <script>
-    function logout() {
-        // Xóa thông tin đăng nhập (có thể thay đổi tùy vào cách bạn lưu trạng thái đăng nhập)
-        localStorage.removeItem("isLoggedIn");
-        
-        // Chuyển hướng đến trang đăng nhập (thay bằng URL trang đăng nhập của bạn)
-        window.location.href = "https://thewebsite2023.github.io/login";
-    }
-
-    // Ngăn người dùng nhấn Back sau khi đăng xuất
-    (function preventBack() {
-        if (!localStorage.getItem("isLoggedIn")) {
-            window.location.href = "https://thewebsite2023.github.io/login"; // Chuyển hướng nếu chưa đăng nhập
-        }
-        window.history.pushState(null, "", window.location.href);
-        window.onpopstate = function () {
-            window.history.pushState(null, "", window.location.href);
-        };
-    })();
     function openInNewTab1() {
       // Mở liên kết trong tab mới
       window.open('https://forms.gle/VMCLbxTJk2fbo88G9', '_blank');
